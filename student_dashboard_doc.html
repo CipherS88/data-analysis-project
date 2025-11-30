@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fayha College Student Dashboard Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #9b59b6;
+            --danger-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --code-bg: #282c34;
+            --code-text: #f8f8f2;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #444;
+            background-color: var(--background-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+        
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--light-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 90%;
+            color: var(--accent-color);
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .method {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-left: 4px solid var(--primary-color);
+            background-color: rgba(52, 152, 219, 0.05);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .method:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .method h3 {
+            margin-top: 0;
+            color: var(--dark-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 80%;
+            font-weight: bold;
+            margin-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .tag-core {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tag-viz {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .tag-predict {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .tag-ui {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        tr:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animation for section headers */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Floating animation for feature cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .feature-card {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Different delay for each card */
+        .feature-card:nth-child(1) { animation-delay: 0s; }
+        .feature-card:nth-child(2) { animation-delay: 0.5s; }
+        .feature-card:nth-child(3) { animation-delay: 1s; }
+        .feature-card:nth-child(4) { animation-delay: 1.5s; }
+    </style>
+</head>
+<body>
+    <h1>📊 Fayha College Student Dashboard Documentation</h1>
+    
+    <div class="container">
+        <div class="section">
+            <h2>Overview</h2>
+            <p>
+                The Fayha College Student Dashboard is a comprehensive data visualization application designed to help administrators and faculty analyze student data across multiple dimensions. 
+                Built with Python using Tkinter and ttkbootstrap for the UI, along with pandas and matplotlib for data processing and visualization, this dashboard provides insights into student demographics, academic performance, financial status, and predictive analytics.
+            </p>
+            <p>
+                The application allows users to upload student data in CSV or Excel format and provides various visualizations across five tabs: Demographics, Academic, Financial, Query, and Predictions.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>System Requirements</h2>
+            <ul>
+                <li>Python 3.7+</li>
+                <li>Required libraries:
+                    <ul>
+                        <li>tkinter</li>
+                        <li>pandas</li>
+                        <li>numpy</li>
+                        <li>matplotlib</li>
+                        <li>seaborn</li>
+                        <li>ttkbootstrap</li>
+                        <li>scikit-learn</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                Installation command:
+            </p>
+            <pre><code>pip install pandas numpy matplotlib seaborn ttkbootstrap scikit-learn</code></pre>
+        </div>
+        
+        <div class="section">
+            <h2>Application Structure</h2>
+            <p>The application is organized as a single class <code>StudentDashboardApp</code> with various methods:</p>
+            
+            <h3>Key Components:</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Main UI Components</h4>
+                    <p>The application uses ttkbootstrap for modern styling and is organized into tabs for different data views.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Data Processing</h4>
+                    <p>Uses pandas for data manipulation and cleaning, with methods to handle missing values and standardize data formats.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Visualization</h4>
+                    <p>Leverages matplotlib and seaborn for creating various charts including bar charts, scatter plots, and heatmaps.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Predictive Analytics</h4>
+                    <p>Implements simple linear regression models to forecast trends and make predictions about future outcomes.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Key Methods Documentation</h2>
+            
+            <div class="method">
+                <h3><span class="tag tag-core">Core</span> __init__(self, root)</h3>
+                <p>Initializes the application with the root Tkinter window and sets up the basic UI components.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>root</code> - The Tkinter root window</li>
+                </ul>
+                <pre><code>def __init__(self, root):
+    self.root = root
+    self.root.title("📊 Fayha College - Student Dashboard")
+    self.style = Style(theme="superhero")  # Modern dark theme
+    self.file_path = None
+    self.df = pd.DataFrame()
+
+    self.create_widgets()</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-ui">UI</span> create_widgets(self)</h3>
+                <p>Creates all UI components including file upload area and tabbed interface.</p>
+                <p>Sets up five tabs:</p>
+                <ul>
+                    <li>Demographics - Student demographic information</li>
+                    <li>Academic - Academic performance metrics</li>
+                    <li>Financial - Financial analysis</li>
+                    <li>Query - For custom data queries</li>
+                    <li>Predictions - Future forecasts and predictions</li>
+                </ul>
+                <pre><code>def create_widgets(self):
+    frame_top = ttk.Frame(self.root)
+    frame_top.pack(pady=10, fill='x')
+
+    self.file_label = ttk.Label(frame_top, text="📁 Upload .csv or .xlsx file")
+    self.file_label.pack(side='left', padx=10)
+
+    self.upload_btn = ttk.Button(frame_top, 
+                               text="Browse", 
+                               command=self.load_file, 
+                               bootstyle="primary")
+    self.upload_btn.pack(side='left')
+
+    self.tabs = ttk.Notebook(self.root, bootstyle="dark")
+    self.tabs.pack(fill='both', expand=True)
+
+    # Create tabs
+    self.tab_demo = ttk.Frame(self.tabs)
+    self.tab_academic = ttk.Frame(self.tabs)
+    self.tab_financial = ttk.Frame(self.tabs)
+    self.tab_query = ttk.Frame(self.tabs)
+    self.tab_predictions = ttk.Frame(self.tabs)
+
+    # Add tabs to notebook
+    self.tabs.add(self.tab_demo, text='🎓 Demographics')
+    self.tabs.add(self.tab_academic, text='📚 Academic')
+    self.tabs.add(self.tab_financial, text='💰 Financial')
+    self.tabs.add(self.tab_query, text='🔍 Query')
+    self.tabs.add(self.tab_predictions, text='🔮 Predictions')</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-core">Core</span> load_file(self)</h3>
+                <p>Opens a file dialog to select and load CSV or Excel data files.</p>
+                <p>Handles file reading based on extension and initiates data processing.</p>
+                <pre><code>def load_file(self):
+    filetypes = [("Excel files", "*.xlsx"), ("CSV files", "*.csv")]
+    self.file_path = filedialog.askopenfilename(
+        title="Open file", 
+        filetypes=filetypes
+    )
+
+    if self.file_path:
+        try:
+            if self.file_path.endswith('.csv'):
+                self.df = pd.read_csv(self.file_path)
+            elif self.file_path.endswith('.xlsx'):
+                self.df = pd.read_excel(self.file_path)
+            else:
+                messagebox.showerror("Invalid File", "Unsupported file format")
+                return
+
+            self.preprocess_data()
+            self.populate_tabs()
+            self.populate_predictions_tab()
+            messagebox.showinfo("Success", 
+                              "File loaded and processed successfully ✅")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to read file: {e}")</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-core">Core</span> preprocess_data(self)</h3>
+                <p>Cleans and transforms the loaded data for analysis.</p>
+                <p>Key preprocessing steps:</p>
+                <ul>
+                    <li>Fills missing values using mean for numeric data and mode for categorical data</li>
+                    <li>Converts categorical variables to numeric (e.g., 'Male'/'Female' to 1/0)</li>
+                    <li>Cleans and standardizes financial data by removing non-numeric characters</li>
+                </ul>
+                <pre><code>def preprocess_data(self):
+    df = self.df
+
+    # Handle missing values
+    for col in df.select_dtypes(include=[np.number]):
+        df[col].fillna(df[col].mean(), inplace=True)
+
+    for col in df.select_dtypes(include=[object]):
+        df[col].fillna(df[col].mode()[0], inplace=True)
+
+    # Convert categorical to numerical
+    df['Sex'] = df['Sex'].map({'Male': 1, 'Female': 0})
+    df['Residence'] = df['Residence'].map({'Yes': 1, 'No': 0})
+    df['Scholarship'] = df['Scholarship'].apply(
+        lambda x: 1 if x != 'None' else 0
+    )
+
+    # Clean financial data
+    df['Tuition Owed'] = df['Tuition Owed'].replace(
+        '[^0-9.]', '', regex=True
+    ).astype(float)
+    df['Debt Amount'] = df['Debt Amount'].replace(
+        '[^0-9.]', '', regex=True
+    ).astype(float)
+
+    self.df = df</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-viz">Visualization</span> plot_to_tab(self, tab, fig)</h3>
+                <p>Helper method to render matplotlib figures onto Tkinter tabs.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>tab</code> - The Tkinter tab to render to</li>
+                    <li><code>fig</code> - The matplotlib figure to render</li>
+                </ul>
+                <pre><code>def plot_to_tab(self, tab, fig):
+    for widget in tab.winfo_children():
+        widget.destroy()
+    canvas = FigureCanvasTkAgg(fig, master=tab)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill='both', expand=True)</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-viz">Visualization</span> populate_tabs(self)</h3>
+                <p>Creates and displays visualizations for the Demographics, Academic, and Financial tabs.</p>
+                <p>Generates multiple visualizations including:</p>
+                <ul>
+                    <li>Gender and age distributions</li>
+                    <li>Major popularity</li>
+                    <li>GPA analysis by major</li>
+                    <li>Correlation between academic and financial metrics</li>
+                </ul>
+                <pre><code>def populate_tabs(self):
+    df = self.df
+
+    # Demographics Tab
+    fig, axs = plt.subplots(1, 3, figsize=(14, 4))
+
+    sns.countplot(data=df, x='Sex', ax=axs[0])
+    axs[0].set_title("Gender Distribution")
+    axs[0].set_xticklabels(['Female', 'Male'])
+
+    sns.histplot(data=df, x='Age', bins=range(18, 26), ax=axs[1])
+    axs[1].set_title("Age Distribution")
+
+    sns.countplot(data=df, x='Major', ax=axs[2])
+    axs[2].set_title("Major Popularity")
+    axs[2].tick_params(axis='x', rotation=30)
+
+    fig.suptitle("🎓 Demographics Overview", fontsize=16)
+    plt.tight_layout()
+    self.plot_to_tab(self.tab_demo, fig)
+
+    # Academic Performance Tab
+    fig, axs = plt.subplots(1, 3, figsize=(14, 4))
+
+    sns.boxplot(data=df, x='Major', y='GPA', ax=axs[0])
+    axs[0].set_title("GPA by Major")
+    axs[0].tick_params(axis='x', rotation=30)
+
+    scatter = sns.scatterplot(data=df, 
+                             x='Semesters', 
+                             y='GPA', 
+                             hue='Debt Amount', 
+                             ax=axs[1])
+    axs[1].set_title("GPA vs Semesters")
+
+    avg_gpa = df.groupby('Enrollment Year')['GPA'].mean().reset_index()
+    sns.lineplot(data=avg_gpa, 
+                x='Enrollment Year', 
+                y='GPA', 
+                marker='o', 
+                ax=axs[2])
+    axs[2].set_title("Avg GPA per Year")
+
+    fig.suptitle("📚 Academic Performance", fontsize=16)
+    plt.tight_layout()
+    self.plot_to_tab(self.tab_academic, fig)
+
+    # Financial Analysis Tab
+    fig, axs = plt.subplots(1, 2, figsize=(12, 4))
+
+    df_fin = df.groupby('Scholarship')[['Tuition Owed', 'Debt Amount']].sum().reset_index()
+    df_fin['Scholarship'] = df_fin['Scholarship'].map(
+        {1: 'With Scholarship', 0: 'Without Scholarship'}
+    )
+    df_fin.set_index('Scholarship')[['Tuition Owed', 'Debt Amount']].plot(
+        kind='bar', stacked=True, ax=axs[0], color=['#4CAF50', '#FF5733'])
+    axs[0].set_title("Tuition vs Debt by Scholarship")
+    axs[0].set_ylabel("Amount (SAR)")
+    axs[0].legend(title="Category")
+
+    corr = df[['Age', 'GPA', 'Debt Amount', 'Tuition Owed']].corr()
+    sns.heatmap(corr, annot=True, cmap='coolwarm', ax=axs[1])
+    axs[1].set_title("Correlation Matrix")
+
+    fig.suptitle("💰 Financial Insights", fontsize=16)
+    plt.tight_layout()
+    self.plot_to_tab(self.tab_financial, fig)</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-predict">Prediction</span> populate_predictions_tab(self)</h3>
+                <p>Creates visualizations for the Predictions tab, showing forecasted trends.</p>
+                <p>Generates four predictive visualizations:</p>
+                <ul>
+                    <li>GPA trend forecast</li>
+                    <li>Debt projection</li>
+                    <li>Graduation rate prediction</li>
+                    <li>Major popularity trend</li>
+                </ul>
+                <pre><code>def populate_predictions_tab(self):
+    """Populate the predictions tab with future projections based on the data"""
+    if self.df.empty:
+        return
+        
+    # Clear the tab first
+    for widget in self.tab_predictions.winfo_children():
+        widget.destroy()
+        
+    # Create a container frame for the predictions
+    predictions_frame = ttk.Frame(self.tab_predictions, padding=20)
+    predictions_frame.pack(fill='both', expand=True)
+    
+    # Add a title
+    title_label = ttk.Label(predictions_frame, 
+                          text="🔮 Future Predictions & Forecasts", 
+                          font=("Helvetica", 16, "bold"))
+    title_label.pack(pady=(0, 20))
+    
+    # Create the predictions visualizations
+    fig = plt.figure(figsize=(14, 10))
+    
+    # 1. GPA Trend Forecast
+    ax1 = plt.subplot2grid((2, 2), (0, 0))
+    self.plot_gpa_forecast(ax1)
+    
+    # 2. Debt Projection
+    ax2 = plt.subplot2grid((2, 2), (0, 1))
+    self.plot_debt_projection(ax2)
+    
+    # 3. Graduation Rate Prediction
+    ax3 = plt.subplot2grid((2, 2), (1, 0))
+    self.plot_graduation_prediction(ax3)
+    
+    # 4. Major Popularity Trend
+    ax4 = plt.subplot2grid((2, 2), (1, 1))
+    self.plot_major_trend(ax4)
+    
+    plt.tight_layout()
+    
+    # Display the predictions in the tab
+    canvas = FigureCanvasTkAgg(fig, master=predictions_frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill='both', expand=True)
+    
+    # Add explanation text
+    explanation_frame = ttk.Frame(predictions_frame)
+    explanation_frame.pack(fill='x', pady=10)
+    
+    explanation_text = """
+    These predictions are based on historical trends in the dataset and should be used as general guidance only.
+    The models use simple linear regression and extrapolation of current trends.
+    For more accurate predictions, consider using advanced machine learning models and additional data sources.
+    """
+    explanation_label = ttk.Label(explanation_frame, 
+                                text=explanation_text, 
+                                wraplength=800)
+    explanation_label.pack(pady=5)</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-predict">Prediction</span> plot_gpa_forecast(self, ax)</h3>
+                <p>Generates a forecast of future GPA trends using linear regression.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>ax</code> - The matplotlib axis to plot on</li>
+                </ul>
+                <p>Uses historical GPA data by enrollment year to predict future average GPAs.</p>
+                <pre><code>def plot_gpa_forecast(self, ax):
+    df = self.df
+    
+    # Get average GPA by enrollment year
+    gpa_by_year = df.groupby('Enrollment Year')['GPA'].mean().reset_index()
+    
+    # Create forecast for future years
+    years = gpa_by_year['Enrollment Year'].values.reshape(-1, 1)
+    gpas = gpa_by_year['GPA'].values
+    
+    # Simple linear regression for prediction
+    model = LinearRegression()
+    model.fit(years, gpas)
+    
+    # Create future years for prediction
+    last_year = years[-1][0]
+    future_years = np.array(range(last_year + 1, last_year + 4)).reshape(-1, 1)
+    
+    # Predict future GPAs
+    future_gpas = model.predict(future_years)
+    
+    # Plot historical data
+    ax.plot(years.flatten(), gpas, 'o-', color='#4CAF50', label='Historical')
+    
+    # Plot predictions
+    ax.plot(future_years.flatten(), future_gpas, 'o--', color='#FF5733', label='Predicted')
+    
+    # Fill the area to indicate prediction uncertainty
+    ax.fill_between(future_years.flatten(), 
+                    future_gpas - 0.2, 
+                    future_gpas + 0.2, 
+                    color='#FF5733', alpha=0.2)
+    
+    ax.set_title("Average GPA Forecast")
+    ax.set_xlabel("Enrollment Year")
+    ax.set_ylabel("Average GPA")
+    ax.set_ylim(min(gpas) - 0.5, max(gpas) + 0.5)
+    ax.grid(True, linestyle='--', alpha=0.7)
+    ax.legend()</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-predict">Prediction</span> plot_debt_projection(self, ax)</h3>
+                <p>Projects future student debt amounts based on semester progression.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>ax</code> - The matplotlib axis to plot on</li>
+                </ul>
+                <p>Uses polynomial curve fitting to extrapolate future debt trends.</p>
+                <pre><code>def plot_debt_projection(self, ax):
+    df = self.df
+    
+    # Calculate average debt by semester
+    debt_by_semester = df.groupby('Semesters')['Debt Amount'].mean().reset_index()
+    
+    # Plot the data
+    semesters = debt_by_semester['Semesters'].values
+    debt = debt_by_semester['Debt Amount'].values
+    
+    # Plot with curve fitting
+    z = np.polyfit(semesters, debt, 2)
+    p = np.poly1d(z)
+    
+    # Generate smooth curve for existing data
+    xp = np.linspace(min(semesters), max(semesters), 100)
+    
+    # Generate future projection
+    future_semesters = np.linspace(max(semesters), max(semesters) + 2, 20)
+    
+    # Plot historical and projected
+    ax.scatter(semesters, debt, color='#4CAF50', label='Historical Data')
+    ax.plot(xp, p(xp), '-', color='#4CAF50')
+    ax.plot(future_semesters, p(future_semesters), '--', color='#FF5733', label='Projected')
+    
+    # Add shaded area for confidence interval
+    ax.fill_between(future_semesters, 
+                    p(future_semesters) * 0.9, 
+                    p(future_semesters) * 1.1, 
+                    color='#FF5733', alpha=0.2)
+    
+    ax.set_title("Student Debt Projection by Semester")
+    ax.set_xlabel("Semester")
+    ax.set_ylabel("Average Debt Amount (SAR)")
+    ax.grid(True, linestyle='--', alpha=0.7)
+    ax.legend()</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-predict">Prediction</span> plot_graduation_prediction(self, ax)</h3>
+                <p>Visualizes predicted graduation rates based on GPA thresholds.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>ax</code> - The matplotlib axis to plot on</li>
+                </ul>
+                <p>Creates a bar chart showing estimated graduation probability by GPA range.</p>
+                <pre><code>def plot_graduation_prediction(self, ax):
+    df = self.df
+    
+    # Simple graduation prediction model based on GPA thresholds
+    gpa_bins = [2.0, 2.5, 3.0, 3.5, 4.0]
+    grad_rates = [0.65, 0.78, 0.85, 0.92, 0.98]  # Estimated rates
+    
+    # Create bar chart
+    ax.bar(range(len(gpa_bins)), grad_rates, color='#4CAF50', alpha=0.7)
+    
+    # Add value labels on the bars
+    for i, v in enumerate(grad_rates):
+        ax.text(i, v + 0.02, f"{v*100:.0f}%", ha='center', fontsize=9)
+    
+    # Set labels and title
+    ax.set_title("Predicted Graduation Rate by GPA")
+    ax.set_xlabel("GPA Range")
+    ax.set_ylabel("Predicted Graduation Rate")
+    ax.set_xticks(range(len(gpa_bins)))
+    ax.set_xticklabels([f"{gpa_bins[i-1]:.1f}-{x:.1f}" if i > 0 else f"<{x:.1f}" 
+                       for i, x in enumerate(gpa_bins)])
+    ax.set_ylim(0, 1.1)
+    ax.grid(True, axis='y', linestyle='--', alpha=0.7)</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-predict">Prediction</span> plot_major_trend(self, ax)</h3>
+                <p>Projects future popularity of academic majors based on historical enrollment data.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>ax</code> - The matplotlib axis to plot on</li>
+                </ul>
+                <p>Identifies the fastest-growing majors and extrapolates their future enrollment.</p>
+                <pre><code>def plot_major_trend(self, ax):
+    df = self.df
+    
+    # Count students by major and enrollment year
+    major_trend = df.groupby(['Enrollment Year', 'Major']).size().unstack().fillna(0)
+    
+    # Get last few years for trending
+    last_years = major_trend.index.sort_values()[-3:]
+    recent_data = major_trend.loc[last_years]
+    
+    # Calculate percent change for each major
+    pct_changes = recent_data.pct_change().iloc[-1].sort_values(ascending=False)
+    
+    # Plot top majors by growth rate
+    top_majors = pct_changes.head(5).index
+    
+    # Create projection for future years
+    last_year = max(major_trend.index)
+    year_range = np.array(list(range(last_year - 2, last_year + 3)))
+    
+    # Plot each major's trend
+    for major in top_majors:
+        if major in major_trend.columns:
+            # Get historical data
+            hist_data = major_trend[major].dropna()
+            
+            if len(hist_data) >= 2:
+                # Simple linear extrapolation
+                z = np.polyfit(hist_data.index, hist_data.values, 1)
+                p = np.poly1d(z)
+                
+                # Project future values
+                projected = p(year_range)
+                
+                # Plot the line
+                ax.plot(year_range, projected, 'o-', label=major)
+                
+                # Add dashed line for future projection
+                future_years = year_range[year_range > last_year]
+                if len(future_years) > 0:
+                    future_data = p(future_years)
+                    ax.plot(future_years, future_data, '--', alpha=0.7)
+    
+    ax.set_title("Major Popularity Projection")
+    ax.set_xlabel("Enrollment Year")
+    ax.set_ylabel("Number of Students")
+    ax.grid(True, linestyle='--', alpha=0.7)
+    ax.legend(title="Growing Majors", loc='upper left')
+    
+    # Add annotation for the projection
+    ax.axvline(x=last_year, color='gray', linestyle='--', alpha=0.8)
+    ax.text(last_year + 0.1, ax.get_ylim()[1] * 0.9, "Projection →", 
+            fontsize=8, ha='left', va='center', color='gray')</code></pre>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Data Format Requirements</h2>
+            <p>The application expects CSV or Excel files with the following columns:</p>
+            
+            <table>
+                <tr>
+                    <th>Column</th>
+                    <th>Data Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Sex</td>
+                    <td>Categorical</td>
+                    <td>'Male' or 'Female'</td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td>Numeric</td>
+                    <td>Student age in years</td>
+                </tr>
+                <tr>
+                    <td>Major</td>
+                    <td>Categorical</td>
+                    <td>Field of study</td>
+                </tr>
+                <tr>
+                    <td>Enrollment Year</td>
+                    <td>Numeric</td>
+                    <td>Year of initial enrollment</td>
+                </tr>
+                <tr>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fayha College Student Dashboard Documentation</title>
+    <style>
+        /* [Previous CSS content remains unchanged] */
+    </style>
+</head>
+<body>
+    <h1>📊 Fayha College Student Dashboard Documentation</h1>
+    
+    <div class="container">
+        <!-- [Previous sections remain unchanged until the Key Methods Documentation] -->
+        
+        <div class="section">
+            <h2>Key Methods Documentation</h2>
+            
+            <div class="method">
+                <h3><span class="tag tag-core">Core</span> __init__(self, root)</h3>
+                <p>Initializes the application with the root Tkinter window and sets up the basic UI components.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>root</code> - The Tkinter root window</li>
+                </ul>
+                <pre><code>def __init__(self, root):
+    self.root = root
+    self.root.title("📊 Fayha College - Student Dashboard")
+    self.style = Style(theme="superhero")  # Modern dark theme
+    self.file_path = None
+    self.df = pd.DataFrame()
+
+    self.create_widgets()</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-ui">UI</span> create_widgets(self)</h3>
+                <p>Creates all UI components including file upload area and tabbed interface.</p>
+                <pre><code>def create_widgets(self):
+    frame_top = ttk.Frame(self.root)
+    frame_top.pack(pady=10, fill='x')
+
+    self.file_label = ttk.Label(frame_top, text="📁 Upload .csv or .xlsx file")
+    self.file_label.pack(side='left', padx=10)
+
+    self.upload_btn = ttk.Button(frame_top, text="Browse", command=self.load_file, bootstyle="primary")
+    self.upload_btn.pack(side='left')
+
+    self.tabs = ttk.Notebook(self.root, bootstyle="dark")
+    self.tabs.pack(fill='both', expand=True)
+
+    # Create tabs
+    self.tab_demo = ttk.Frame(self.tabs)
+    self.tab_academic = ttk.Frame(self.tabs)
+    self.tab_financial = ttk.Frame(self.tabs)
+    self.tab_query = ttk.Frame(self.tabs)
+    self.tab_predictions = ttk.Frame(self.tabs)
+
+    # Add tabs to notebook
+    self.tabs.add(self.tab_demo, text='🎓 Demographics')
+    self.tabs.add(self.tab_academic, text='📚 Academic')
+    self.tabs.add(self.tab_financial, text='💰 Financial')
+    self.tabs.add(self.tab_query, text='🔍 Query')
+    self.tabs.add(self.tab_predictions, text='🔮 Predictions')</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-core">Core</span> load_file(self)</h3>
+                <p>Opens a file dialog to select and load CSV or Excel data files.</p>
+                <pre><code>def load_file(self):
+    filetypes = [("Excel files", "*.xlsx"), ("CSV files", "*.csv")]
+    self.file_path = filedialog.askopenfilename(title="Open file", filetypes=filetypes)
+
+    if self.file_path:
+        try:
+            if self.file_path.endswith('.csv'):
+                self.df = pd.read_csv(self.file_path)
+            elif self.file_path.endswith('.xlsx'):
+                self.df = pd.read_excel(self.file_path)
+            else:
+                messagebox.showerror("Invalid File", "Unsupported file format")
+                return
+
+            self.preprocess_data()
+            self.populate_tabs()
+            self.populate_predictions_tab()
+            messagebox.showinfo("Success", "File loaded and processed successfully ✅")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to read file: {e}")</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-core">Core</span> preprocess_data(self)</h3>
+                <p>Cleans and transforms the loaded data for analysis.</p>
+                <pre><code>def preprocess_data(self):
+    df = self.df
+
+    # Handle missing values
+    for col in df.select_dtypes(include=[np.number]):
+        df[col].fillna(df[col].mean(), inplace=True)
+
+    for col in df.select_dtypes(include=[object]):
+        df[col].fillna(df[col].mode()[0], inplace=True)
+
+    # Convert categorical to numerical
+    df['Sex'] = df['Sex'].map({'Male': 1, 'Female': 0})
+    df['Residence'] = df['Residence'].map({'Yes': 1, 'No': 0})
+    df['Scholarship'] = df['Scholarship'].apply(lambda x: 1 if x != 'None' else 0)
+
+    # Clean financial data
+    df['Tuition Owed'] = df['Tuition Owed'].replace('[^0-9.]', '', regex=True).astype(float)
+    df['Debt Amount'] = df['Debt Amount'].replace('[^0-9.]', '', regex=True).astype(float)
+
+    self.df = df</code></pre>
+            </div>
+            
+            <div class="method">
+                <h3><span class="tag tag-predict">Prediction</span> plot_gpa_forecast(self, ax)</h3>
+                <p>Generates a forecast of future GPA trends using linear regression.</p>
+                <pre><code>def plot_gpa_forecast(self, ax):
+    df = self.df
+    
+    # Get average GPA by enrollment year
+    gpa_by_year = df.groupby('Enrollment Year')['GPA'].mean().reset_index()
+    
+    # Create forecast for future years
+    years = gpa_by_year['Enrollment Year'].values.reshape(-1, 1)
+    gpas = gpa_by_year['GPA'].values
+    
+    # Simple linear regression for prediction
+    model = LinearRegression()
+    model.fit(years, gpas)
+    
+    # Create future years for prediction
+    last_year = years[-1][0]
+    future_years = np.array(range(last_year + 1, last_year + 4)).reshape(-1, 1)
+    
+    # Predict future GPAs
+    future_gpas = model.predict(future_years)
+    
+    # Plot historical data
+    ax.plot(years.flatten(), gpas, 'o-', color='#4CAF50', label='Historical')
+    
+    # Plot predictions
+    ax.plot(future_years.flatten(), future_gpas, 'o--', color='#FF5733', label='Predicted')
+    
+    # Fill the area to indicate prediction uncertainty
+    ax.fill_between(future_years.flatten(), 
+                    future_gpas - 0.2, 
+                    future_gpas + 0.2, 
+                    color='#FF5733', alpha=0.2)
+    
+    ax.set_title("Average GPA Forecast")
+    ax.set_xlabel("Enrollment Year")
+    ax.set_ylabel("Average GPA")
+    ax.set_ylim(min(gpas) - 0.5, max(gpas) + 0.5)
+    ax.grid(True, linestyle='--', alpha=0.7)
+    ax.legend()</code></pre>
+            </div>
+            
+            <!-- [Rest of the HTML content remains unchanged] -->
+        </div>
+        
+        <!-- [All other sections remain unchanged] -->
+    </div>
+</body>
+</html>
