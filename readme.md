@@ -1,68 +1,95 @@
 <div align="center">
 
-# 📊 Fayha College - Student Dashboard
-### *Data Analysis & Predictive Modeling*
+# 📊 Fayha College · Student Dashboard
 
-<br>
+### *Raw student data in, academic and financial insight out*
 
-> *A comprehensive GUI tool transforming raw student data into actionable academic and financial insights. Powered by Python & Machine Learning.* 🔮
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Tkinter](https://img.shields.io/badge/GUI-Tkinter-4B8BBE?style=for-the-badge&logo=python&logoColor=white)
 
-<br>
-
-![Python](https://img.shields.io/badge/Python-Data_Science-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Sklearn](https://img.shields.io/badge/scikit--learn-Regression-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-Analytics-150458?style=for-the-badge&logo=pandas&logoColor=white)
+> *A desktop dashboard that cleans a student dataset, draws the charts nobody has time to draw, and forecasts what comes next.*
 
 </div>
 
 ---
 
 ## 🧐 Overview
-This application is designed to help administrators visualize student performance and financial data. By uploading a simple `.csv` or `.xlsx` file, the dashboard automatically cleans the data, fills missing values, and generates interactive reports.
 
-It features a modern **"Superhero" Dark Theme** interface and uses Machine Learning to forecast future trends. 🌃
+This application helps administrators visualise student performance and financial data. Feed it a `.csv` or `.xlsx` file and it cleans the data, fills missing values, and generates interactive reports.
 
----
-
-## 🚀 Key Features
-
-### 🎓 1. Demographics Analysis
-* **Gender & Age Distribution:** Visual breakdown of the student body.
-* **Major Popularity:** Tracks which courses are attracting the most students.
-
-### 📚 2. Academic Performance
-* **GPA vs. Major:** Boxplots to identify difficult majors.
-* **Semester Trends:** Analyze how GPA fluctuates as students progress.
-* **Correlation:** See how semesters impact academic success.
-
-### 💰 3. Financial Insights
-* **Debt Analysis:** Stacked bar charts showing Tuition vs. Debt.
-* **Scholarship Impact:** Compares financial standing of scholarship vs. non-scholarship students.
-* **Heatmaps:** Correlation matrix to find hidden relationships between Age, GPA, and Debt.
-
-### 🔮 4. Predictive Modeling (Machine Learning)
-* **GPA Forecast:** Uses **Linear Regression** to predict future average GPA trends.
-* **Debt Projection:** Polynomial curve fitting to estimate future student debt loads.
-* **Graduation Rate:** Predictive model estimating graduation probability based on current GPA.
-* **Major Trends:** Projects which majors will grow in the next 3 years.
+It ships with a modern dark-theme interface and uses machine learning to project future trends.
 
 ---
 
-## 🛠️ The Tech Stack
+## 🚀 المميزات
 
-| Library | Purpose |
+### 🎓 1. Demographics
+
+- **Gender & age distribution** — visual breakdown of the student body.
+- **Major popularity** — which programmes attract the most students.
+
+### 📚 2. Academic performance
+
+- **GPA vs. major** — boxplots that show which majors are hard.
+- **Semester trends** — how GPA moves as students progress.
+- **Correlation** — how semesters impact academic success.
+
+### 💰 3. Financial insights
+
+- **Debt analysis** — stacked bars of tuition vs. debt.
+- **Scholarship impact** — scholarship vs. non-scholarship standing.
+- **Heatmaps** — correlation matrix across age, GPA and debt.
+
+### 🔮 4. Predictive modelling
+
+- **GPA forecast** — linear regression on future average GPA.
+- **Debt projection** — polynomial curve fitting for future debt load.
+- **Graduation rate** — probability from current GPA.
+- **Major trends** — which majors grow in the next 3 years.
+
+---
+
+## 🛠️ التقنيات
+
+| المكتبة | الدور |
 | :--- | :--- |
-| **Tkinter & TtkBootstrap** | The modern, responsive GUI framework. |
-| **Pandas & NumPy** | Data manipulation, cleaning, and preprocessing. |
-| **Matplotlib & Seaborn** | Generating the static and statistical graphs. |
-| **Scikit-Learn** | Linear Regression models for the "Predictions" tab. |
+| **Tkinter & TtkBootstrap** | الواجهة الرسومية |
+| **Pandas & NumPy** | تنظيف البيانات ومعالجتها |
+| **Matplotlib & Seaborn** | الرسوم البيانية والإحصائية |
+| **scikit-learn** | نماذج الانحدار في تبويب التوقعات |
 
 ---
 
-## 💻 How to Run
-
-### 1. Prerequisites
-Ensure you have Python installed and the required data science libraries:
+## 💻 التشغيل
 
 ```bash
 pip install pandas numpy seaborn matplotlib scikit-learn ttkbootstrap openpyxl
+python beta-app.py      # النسخة الكاملة
+python modren-app.py    # نسخة الواجهة الحديثة
+python generator.py     # توليد بيانات تجريبية
+```
+
+الملفات في `sample/` جاهزة للتجربة، و`pdf.html` يعرض التقرير بصيغة قابلة للطباعة.
+
+---
+
+## 📂 البنية
+
+```text
+beta-app.py          التطبيق الرئيسي
+modren-app.py        نسخة الواجهة الحديثة
+generator.py         مولّد بيانات تجريبية
+sample/              ملفات CSV/XLSX للتجربة
+student_dashboard_doc.html   التوثيق
+pdf.html             نسخة التقرير للطباعة
+```
+
+---
+
+<div align="center">
+
+<sub>Built by <b>Abdullah Aljuaid</b> · <a href="https://github.com/CipherS88">@CipherS88</a></sub>
+
+</div>
